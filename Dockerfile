@@ -21,6 +21,3 @@ ENV PATH=$MAVEN_HOME/bin:$PATH
 
 # Copiar el contenido del proyecto al contenedor
 COPY . /app
-
-# Ejecutar el comando de Maven (si lo necesitas)
-CMD ["mvn", "clean", "install"]
