@@ -4,7 +4,7 @@ FROM openjdk:8-jdk-alpine
 # Establecer el directorio de trabajo
 WORKDIR /app
 
-# Instalar Maven en el contenedor
+# Instalar Maven en Alpine usando apk
 RUN apk add --no-cache \
     bash \
     curl \
@@ -16,8 +16,8 @@ RUN apk add --no-cache \
     && rm -f /tmp/maven.tar.gz
 
 # Establecer las variables de entorno para Maven
-ENV MAVEN_HOME /opt/maven
-ENV PATH $MAVEN_HOME/bin:$PATH
+ENV MAVEN_HOME=/opt/maven
+ENV PATH=$MAVEN_HOME/bin:$PATH
 
 # Copiar el contenido del proyecto al contenedor
 COPY . /app
