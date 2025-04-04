@@ -1,23 +1,12 @@
-# Usar openjdk 8 basado en Alpine
-FROM openjdk:8-jdk-alpine
+FROM openjdk:8-jdk-slim
 
-# Establecer el directorio de trabajo
-WORKDIR /app
+WORKDIR /home/usuario/Ejecucion
 
-# Instalar Maven en Alpine usando apk
-RUN apk add --no-cache \
-    bash \
-    curl \
-    git \
-    && curl -fsSL https://archive.apache.org/dist/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz -o /tmp/maven.tar.gz \
-    && tar -xzf /tmp/maven.tar.gz -C /opt/ \
-    && ln -s /opt/apache-maven-3.8.6 /opt/maven \
-    && ln -s /opt/maven/bin/mvn /usr/bin/mvn \
-    && rm -f /tmp/maven.tar.gz
+# Instalar Maven y herramientas necesarias
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    maven \
+    vim \ 
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Establecer las variables de entorno para Maven
-ENV MAVEN_HOME=/opt/maven
-ENV PATH=$MAVEN_HOME/bin:$PATH
-
-# Copiar el contenido del proyecto al contenedor
-COPY . /app
+# Verificar las versiones instaladas
+RUN java -version && mvn -version
